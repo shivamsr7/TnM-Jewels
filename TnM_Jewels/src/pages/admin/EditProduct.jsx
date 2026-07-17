@@ -103,12 +103,11 @@ const uploadImages = async (files) => {
       const formDataObj = new FormData();
       formDataObj.append("image", file);
 
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, {
-    method: "PUT",
-        body: formDataObj,
-      });
-
-      const data = await res.json();
+const { data } = await api.post("/api/upload", formDataObj, {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
 
       if (!data.success) {
         throw new Error(data.message);
