@@ -1,6 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaCloudUploadAlt, FaTrash } from "react-icons/fa";
+import api from "../../services/apiClient";
 export default function AddProduct() {
     const [slugAvailable, setSlugAvailable] = useState(null);
     const [uploading, setUploading] = useState(false);
@@ -45,11 +46,7 @@ const checkSlugAvailability = async (slug) => {
   }
 
   try {
-    const response = await fetch(
-      `http://localhost:5000/api/products/check-slug/${slug}`
-    );
-
-    const data = await response.json();
+const { data } = await api.get(`/api/products/check-slug/${slug}`);
 
     if (data.success) {
       setSlugAvailable(data.available);
@@ -66,12 +63,7 @@ const uploadImages = async (files) => {
       const formDataObj = new FormData();
       formDataObj.append("image", file);
 
-      const res = await fetch("http://localhost:5000/api/upload", {
-        method: "POST",
-        body: formDataObj,
-      });
-
-      const data = await res.json();
+const { data } = await api.post("/api/upload", formDataObj);
 
       if (!data.success) {
         throw new Error(data.message);
@@ -186,15 +178,7 @@ new_arrival:formData.newArrival,
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
+const { data } = await api.post("/api/products", payload);
 
       if (data.success) {
         toast.success("Product Added Successfully!");

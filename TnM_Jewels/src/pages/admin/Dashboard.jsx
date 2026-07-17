@@ -11,6 +11,7 @@ import { FaExclamationTriangle } from "react-icons/fa";
 import CategoryChart from "../../components/admin/CategoryChart";
 import StockChart from "../../components/admin/StockChart";
 import RecentOrders from "../../components/admin/RecentOrders";
+import api from "../../services/apiClient";
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
   const [latestProducts, setLatestProducts] = useState([]);
@@ -21,26 +22,21 @@ export default function Dashboard() {
     fetchDashboard();
   }, []);
 
-  const fetchDashboard = async () => {
-    
-    try {
-      const res = await fetch(
-        "http://localhost:5000/api/products/dashboard/stats"
-      );
+const fetchDashboard = async () => {
+  try {
+    const { data } = await api.get("/api/products/dashboard/stats");
 
-      const data = await res.json();
-
-      if (data.success) {
-        setStats(data.stats);
-        setLatestProducts(data.latestProducts);
-        setProducts(data.products);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
+    if (data.success) {
+      setStats(data.stats);
+      setLatestProducts(data.latestProducts);
+      setProducts(data.products);
     }
-  };
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (loading) return <h2>Loading...</h2>;
 

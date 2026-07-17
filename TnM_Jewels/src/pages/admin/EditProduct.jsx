@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaCloudUploadAlt, FaTrash } from "react-icons/fa";
+import api from "../../services/apiClient";
 export default function AddProduct() {
     const { id } = useParams();
 const navigate = useNavigate();
@@ -12,11 +13,7 @@ useEffect(() => {
 
 const fetchProduct = async () => {
   try {
-    const res = await fetch(
-      `http://localhost:5000/api/products/id/${id}`
-    );
-
-    const data = await res.json();
+const { data } = await api.get(`/api/products/id/${id}`);
 
     if (data.success) {
       const product = data.product;
@@ -87,11 +84,9 @@ const checkSlugAvailability = async (slug) => {
   }
 
   try {
-    const response = await fetch(
-      `http://localhost:5000/api/products/check-slug/${slug}`
-    );
-
-    const data = await response.json();
+const { data } = await api.get(
+  `/api/products/check-slug/${slug}`
+);
 
     if (data.success) {
       setSlugAvailable(data.available);

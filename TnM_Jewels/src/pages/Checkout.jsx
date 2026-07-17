@@ -9,6 +9,7 @@ import {
   createRazorpayOrder,
   verifyPayment,
 } from "../services/paymentService";
+import api from "../services/apiClient"; // adjust the path to your file
 export default function Checkout() {
     const indianStates = [
   "Andhra Pradesh",
@@ -111,21 +112,10 @@ const calculateShipping = async (pincode) => {
   try {
     setLoadingShipping(true);
 
-    const res = await fetch(
-      "http://localhost:5000/api/shipping/calculate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          pincode,
-          subtotal,
-        }),
-      }
-    );
-
-    const data = await res.json();
+const { data } = await api.post("/api/shipping/calculate", {
+  pincode,
+  subtotal,
+});
 
 if (data.success) {
   setShippingCharge(data.shippingCharge);
@@ -272,45 +262,39 @@ const createWebsiteOrder = async ({
   paymentStatus,
   paymentId = null,
 }) => {
-  const response = await fetch("http://localhost:5000/api/orders", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      customer_name: formData.fullName,
-      customer_email: formData.email,
-      customer_phone: formData.phone,
-      shipping_address:
-        formData.address +
-        (formData.apartment ? ", " + formData.apartment : ""),
-      city: formData.city,
-      state: formData.state,
-      pincode: formData.pincode,
+const { data } = await api.post("/api/orders", {
+  customer_name: formData.fullName,
+  customer_email: formData.email,
+  customer_phone: formData.phone,
+  shipping_address:
+    formData.address +
+    (formData.apartment ? ", " + formData.apartment : ""),
+  city: formData.city,
+  state: formData.state,
+  pincode: formData.pincode,
 
-      subtotal,
-      shipping_charge: shippingCharge,
-      total,
+  subtotal,
+  shipping_charge: shippingCharge,
+  total,
 
-      payment_method: paymentMethod,
-      payment_status: paymentStatus,
-      payment_id: paymentId,
+  payment_method: paymentMethod,
+  payment_status: paymentStatus,
+  payment_id: paymentId,
 
-      order_notes: orderNotes,
-      gift_wrap: giftWrap,
-      coupon_code: coupon || null,
+  order_notes: orderNotes,
+  gift_wrap: giftWrap,
+  coupon_code: coupon || null,
 
-      items: cartItems.map((item) => ({
-        product_id: item.id,
-        product_name: item.name,
-        image: item.images?.[0],
-        price: item.price,
-        quantity: item.quantity,
-      })),
-    }),
-  });
+  items: cartItems.map((item) => ({
+    product_id: item.id,
+    product_name: item.name,
+    image: item.images?.[0],
+    price: item.price,
+    quantity: item.quantity,
+  })),
+});
 
-  return response.json();
+return data;
 };
 const handlePlaceOrder = async () => {
 if (!validateForm()) {
