@@ -1,5 +1,5 @@
 import tanishq from "../assets/about/Tanishq1.jpg";
-import muskan from "../assets/about/muskan.jpg";
+import muskan from "../assets/about/Muskan.jpg";
 
 import {
   FaShieldAlt,

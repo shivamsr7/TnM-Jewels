@@ -1,4 +1,4 @@
-import PolicyLayout from "../components/policy/PolicyLayout";
+import PolicyLayout from "../components/Policy/PolicyLayout";
 import { returnPolicy } from "../data/returnPolicy";
 
 export default function ReturnRefund() {
