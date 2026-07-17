@@ -206,7 +206,19 @@ setSlugAvailable(null);
       console.error(err);
     }
   };
+const handleDragOver = (e) => {
+  e.preventDefault();
+};
 
+const handleDrop = (e) => {
+  e.preventDefault();
+
+  const files = [...e.dataTransfer.files];
+
+  if (files.length) {
+    uploadImages(files);
+  }
+};
   return (
     <div className="max-w-4xl rounded-2xl bg-white p-8 shadow">
       <h1 className="mb-8 text-3xl font-bold">
@@ -332,6 +344,8 @@ setSlugAvailable(null);
     </label>
 
     <label
+    onDragOver={handleDragOver}
+  onDrop={handleDrop}
         className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-10 transition hover:border-[#C8A45C] hover:bg-yellow-50"
     >
 
