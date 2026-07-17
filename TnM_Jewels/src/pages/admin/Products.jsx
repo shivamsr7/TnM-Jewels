@@ -75,8 +75,6 @@ const { data } = await api.delete(
   `/api/products/${selectedProduct.id}`
 );
 
-    const data = await res.json();
-
     if (data.success) {
       toast.success("Product deleted successfully");
 
