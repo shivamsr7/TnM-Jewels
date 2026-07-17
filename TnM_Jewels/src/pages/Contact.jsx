@@ -6,7 +6,7 @@ import {
   FaClock,
   FaArrowRight,
 } from "react-icons/fa";
-import { contactCards } from "../data/contactData";
+import { contactCards } from "../data/ContactData";
 
 export default function Contact() {
   const [formData, setFormData] = useState({

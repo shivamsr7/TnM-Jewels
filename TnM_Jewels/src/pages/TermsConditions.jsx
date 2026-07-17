@@ -1,4 +1,4 @@
-import PolicyLayout from "../components/policy/PolicyLayout";
+import PolicyLayout from "../components/Policy/PolicyLayout";
 import { termsPolicy } from "../data/termsPolicy";
 
 export default function TermsConditions() {
