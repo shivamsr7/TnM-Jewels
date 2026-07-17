@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import DeleteModal from "../../components/admin/DeleteModal";
+import api from "../../services/apiClient";
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,8 +20,7 @@ const [selectedProduct, setSelectedProduct] = useState(null);
 
 const fetchProducts = async () => {
   try {
-    const res = await fetch("http://localhost:5000/api/products");
-    const data = await res.json();
+const { data } = await api.get("/api/products");
 
     if (data.success) {
       setProducts(data.products);
