@@ -71,12 +71,9 @@ const deleteProduct = async () => {
   if (!selectedProduct) return;
 
   try {
-    const res = await fetch(
-      `http://localhost:5000/api/products/${selectedProduct.id}`,
-      {
-        method: "DELETE",
-      }
-    );
+const { data } = await api.delete(
+  `/api/products/${selectedProduct.id}`
+);
 
     const data = await res.json();
 
