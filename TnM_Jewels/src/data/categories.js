@@ -1,4 +1,4 @@
-import ringIcon from "../assets/icon/ringIcon.jpg";
+import ringIcon from "../assets/icon/ringicon.jpg";
 import earringIcon from "../assets/icon/EarringIconImage.jpg";
 import necklaceIcon from "../assets/icon/Necklace-Icon.png";
 import PendantIcon from "../assets/icon/pendant-icon.jpg";

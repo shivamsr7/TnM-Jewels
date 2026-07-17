@@ -1,5 +1,5 @@
 import banner1 from "../assets/banners/banner2.png";
-import banner2 from "../assets/banners/benner3.png";
+import banner2 from "../assets/banners/Benner3.png";
 const heroSlides = [
   {
     id: 1,
