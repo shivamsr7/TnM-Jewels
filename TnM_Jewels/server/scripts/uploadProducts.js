@@ -1,1 +1,0 @@
-import products from "../data/products.json" with { type: "json" };
